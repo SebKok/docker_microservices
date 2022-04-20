@@ -1,0 +1,6 @@
+venv
+kafka_data
+kafka_log
+rabbitmq
+zookeeper_data
+.vscode
