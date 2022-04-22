@@ -1,21 +1,17 @@
 {
-    "name" : "RabbitMQConnector2",
+    "name" : "RabbitMQConnector",
     "config" : {
-        "connector.class": "io.confluent.connect.rabbitmq.RabbitMQSourceConnector",
-        "confluent.topic.bootstrap.servers": "kafka:29092",
-        "confluent.license": "",
-        "tasks.max": "2",
-        "kafka.topic": "temperature",
-        "rabbitmq.queue": "temperature",
+        "connector.class" : "io.confluent.connect.rabbitmq.RabbitMQSourceConnector",
+        "kafka.topic" : "temperature",
+        "rabbitmq.queue" : "temperature",
         "rabbitmq.username": "guest",
         "rabbitmq.password": "guest",
         "rabbitmq.host": "rabbitmq",
         "rabbitmq.port": "5672",
         "rabbitmq.virtual.host": "/",
-        "confluent.topic.replication.factor": "1",
-        "confluent.topic": "temperature",
-        "topic.creation.$alias.replication.factor": "1",
-        "topic.creation.$alias.partitions": "1",
+        "confluent.license":"",
+        "confluent.topic.bootstrap.servers":"kafka:29092",
+        "confluent.topic.replication.factor":1,
         "value.converter": "org.apache.kafka.connect.storage.StringConverter",
         "key.converter": "org.apache.kafka.connect.storage.StringConverter"
     }
