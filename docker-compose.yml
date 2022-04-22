@@ -6,35 +6,31 @@ services:
     ports:
         - '5672:5672'
         - '15672:15672'
-    environment:
-      - RABBITMQ_DEFAULT_USER=user
-      - RABBITMQ_DEFAULT_PASS=password
+    # environment:
+      # - RABBITMQ_DEFAULT_USER=user
+      # - RABBITMQ_DEFAULT_PASS=password
   zookeeper:
     container_name: "zookeeper"
     image: confluentinc/cp-zookeeper:6.2.0
     ports:
       - "2181:2181"
     volumes:
-      - "./zookeeper_data:/bitnami"
+      - "./rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf"
     environment:
       - ALLOW_ANONYMOUS_LOGIN=yes
       - ZOOKEEPER_CLIENT_PORT=2181
+      - ZOOKEEPER_TICK_TIMME=2000
   kafka:
     container_name: "kafka"
     image: confluentinc/cp-kafka:6.2.0
+    hostname: kafka
     depends_on:
       - zookeeper
     ports:
       - "9092:9092"
-      - "29092:29092"
-    volumes:
-      - "./kafka_data:/bitnami"
-      - "./kafka_log:/tmp/kafka_mounts/logs"
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      # ALLOW_PLAINTEXT_LISTENERS: yes
-      # ALLOW_PLAINTEXT_LISTENER: yes
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,HOST:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,HOST://localhost:9092
@@ -72,6 +68,18 @@ services:
       CONNECT_STATUS_STORAGE_REPLICATION_FACTOR: "1"
       CONNECT_PLUGIN_PATH: '/usr/share/java,/usr/share/confluent-hub-components/'
       CONNECT_HOST: kafka-connect    
+  schema-registry:
+    image: confluentinc/cp-schema-registry:6.2.0
+    container_name: schema-registry
+    ports:
+      - 8081:8081
+    hostname: schema-registry
+    depends_on:
+      - kafka
+    environment:
+      SCHEMA_REGISTRY_HOST_NAME: schema-registry
+      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: PLAINTEXT://kafka:29092
+      SCHEMA_REGISTRY_CUB_KAFKA_TIMEOUT: 300
   # mongo:
   #   container_name: "mongodb"
   #   image: mongo

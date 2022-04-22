@@ -1,8 +1,9 @@
 import pika, sys, os
 
 def main():
-    credentials = pika.credentials.PlainCredentials('user', 'password')
-    connection = pika.BlockingConnection(pika.ConnectionParameters('localhost', credentials=credentials))
+    # credentials = pika.credentials.PlainCredentials('user', 'password')
+    # connection = pika.BlockingConnection(pika.ConnectionParameters('localhost', credentials=credentials))
+    connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
     channel = connection.channel()
 
     channel.queue_declare(queue='temperature')
