@@ -1,0 +1,57 @@
+{
+	"info": {
+		"_postman_id": "bb619b46-d746-4807-a0af-cf385156ad69",
+		"name": "Microservices",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create connector",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\" : \"RabbitMQConnector\",\r\n    \"config\" : {\r\n        \"connector.class\" : \"io.confluent.connect.rabbitmq.RabbitMQSourceConnector\",\r\n        \"kafka.topic\" : \"temperature\",\r\n        \"rabbitmq.queue\" : \"temperature\",\r\n        \"rabbitmq.username\": \"guest\",\r\n        \"rabbitmq.password\": \"guest\",\r\n        \"rabbitmq.host\": \"rabbitmq\",\r\n        \"rabbitmq.port\": \"5672\",\r\n        \"rabbitmq.virtual.host\": \"/\",\r\n        \"confluent.license\":\"\",\r\n        \"confluent.topic.bootstrap.servers\":\"kafka:29092\",\r\n        \"confluent.topic.replication.factor\":1,\r\n        \"value.converter\": \"org.apache.kafka.connect.storage.StringConverter\",\r\n        \"key.converter\": \"org.apache.kafka.connect.storage.StringConverter\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8083/connectors/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8083",
+					"path": [
+						"connectors",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check connector classes",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8083/connector-plugins",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8083",
+					"path": [
+						"connector-plugins"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
