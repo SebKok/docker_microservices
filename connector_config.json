@@ -12,7 +12,7 @@
         "confluent.license":"",
         "confluent.topic.bootstrap.servers":"kafka:29092",
         "confluent.topic.replication.factor":1,
-        "value.converter": "org.apache.kafka.connect.storage.StringConverter",
+        "value.converter": "org.apache.kafka.connect.converters.ByteArrayConverter",
         "key.converter": "org.apache.kafka.connect.storage.StringConverter"
     }
 }

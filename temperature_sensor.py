@@ -18,7 +18,7 @@ def main():
         time.sleep(1)
         current_temp = 12 + random.uniform(-5.0, 5.0)
         timestamp = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
-        body=f'{{"timestamp: {timestamp}, "temperature":{current_temp}}}'
+        body=f'{{"timestamp": "{timestamp}", "temperature" : "{current_temp}"}}'
 
         channel.basic_publish(exchange='',
         routing_key='temperature',
