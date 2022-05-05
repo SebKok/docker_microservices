@@ -35,6 +35,7 @@ services:
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
       KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 100
+      KAFKA_CREATE_TOPICS: "temperature:1:1"
   kafka-connect:
     container_name: "kafka-connect"
     # image: connect-rabbitmq:latest
