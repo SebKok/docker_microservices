@@ -1,7 +1,6 @@
-Project made for Computer Systems Management class
-Author: Sebastian Kokoszka
-
-Topic: Dockerized application with mock tempearture sensor, RabbitMQ, Kafka, stream processing and MongoDB
+Project made for Computer Systems Management class, AGH  
+Author: Sebastian Kokoszka  
+Topic: Dockerized application with mock tempearture sensor, RabbitMQ, Kafka, stream processing and MongoDB  
 
 ![Architecture](./Architecture.png)
 1. temperature_sensor.py generates mock temperature data every second and sends it RabbitMQ queue 'temperature'
