@@ -4,3 +4,4 @@ kafka_log
 rabbitmq
 zookeeper_data
 .vscode
+__pycache__
