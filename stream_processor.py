@@ -14,9 +14,7 @@ db = client.admin
 @app.agent(topic)
 async def hello(messages):
     async for batch in messages.take(5, within=10):
-        # print(f'Received {batch}')
         average = sum(float(x['temperature']) for x in batch) / 5
-        # write this to mongo here
         timestamp = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
         db.temperature.insert_one({"average":average, "timestamp":timestamp})
         print('average: ' + str(average))

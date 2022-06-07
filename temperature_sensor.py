@@ -12,8 +12,6 @@ channel = connection.channel()
 channel.queue_declare(queue='temperature')
 
 def main():
-    # credentials = pika.credentials.PlainCredentials('user', 'password')
-    # connection = pika.BlockingConnection(pika.ConnectionParameters('localhost', credentials=credentials))
     while True:
         time.sleep(1)
         current_temp = 12 + random.uniform(-5.0, 5.0)
@@ -29,7 +27,6 @@ def main():
             expiration='600000',
             priority=1,
             app_id="temperature",
-            # reply_to="n/a",
             correlation_id="1",
             headers={}
         )
