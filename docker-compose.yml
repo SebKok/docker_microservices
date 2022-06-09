@@ -83,7 +83,28 @@ services:
         echo "Launching Kafka Connect worker"
         /etc/confluent/docker/run & 
         #
-        sleep infinity
+        sleep 30
+        curl -X POST -H  "Content-Type:application/json" \
+          http://localhost:8083/connectors \
+          -d '{
+            "name" : "RabbitMQConnector",
+              "config" : {
+                  "connector.class" : "io.confluent.connect.rabbitmq.RabbitMQSourceConnector",
+                  "kafka.topic" : "temperature",
+                  "rabbitmq.queue" : "temperature",
+                  "rabbitmq.username": "guest",
+                  "rabbitmq.password": "guest",
+                  "rabbitmq.host": "rabbitmq",
+                  "rabbitmq.port": "5672",
+                  "rabbitmq.virtual.host": "/",
+                  "confluent.license":"",
+                  "confluent.topic.bootstrap.servers":"kafka:29092",
+                  "confluent.topic.replication.factor":1,
+                  "value.converter": "org.apache.kafka.connect.converters.ByteArrayConverter",
+                  "key.converter": "org.apache.kafka.connect.storage.StringConverter"
+              }
+          } '
+        sleep infinity  
   kafka-ui:
     image: provectuslabs/kafka-ui
     container_name: kafka-ui
