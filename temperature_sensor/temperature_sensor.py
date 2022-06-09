@@ -6,7 +6,7 @@ from datetime import datetime
 import random
 import time
 
-connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
+connection = pika.BlockingConnection(pika.ConnectionParameters('host.docker.internal', 5672))
 channel = connection.channel()
 
 channel.queue_declare(queue='temperature')

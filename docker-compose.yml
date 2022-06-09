@@ -2,6 +2,7 @@ version: "3"
 services:
   rabbitmq:
     container_name: "rabbitmq"
+    hostname: "rabbitmq"
     image: rabbitmq:3.8-management-alpine
     ports:
         - '5672:5672'
@@ -13,6 +14,11 @@ services:
     environment:
       - ZOOKEEPER_CLIENT_PORT=2181
       - ZOOKEEPER_TICK_TIMME=2000
+  temperature_sensor:
+    container_name: "temperature_sernsor"
+    build: ./temperature_sensor
+    depends_on:
+      - rabbitmq
   kafka:
     container_name: "kafka"
     image: confluentinc/cp-kafka:6.2.0
