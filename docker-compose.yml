@@ -19,6 +19,8 @@ services:
     build: ./temperature_sensor
     depends_on:
       - rabbitmq
+    # rabbit is sometimes slow to start so we restart until we can connect
+    restart: always
   kafka:
     container_name: "kafka"
     image: confluentinc/cp-kafka:6.2.0
@@ -101,20 +103,21 @@ services:
       MONGO_INITDB_ROOT_USERNAME: admin
       MONGO_INITDB_ROOT_PASSWORD: admin
   mongo-express:
-        image: mongo-express
-        environment:
-            - ME_CONFIG_MONGODB_SERVER=mongo
-            - ME_CONFIG_MONGODB_PORT=27017
-            - ME_CONFIG_MONGODB_ENABLE_ADMIN=false
-            - ME_CONFIG_MONGODB_AUTH_DATABASE=admin
-            - ME_CONFIG_MONGODB_AUTH_USERNAME=admin
-            - ME_CONFIG_MONGODB_AUTH_PASSWORD=admin
-            - ME_CONFIG_BASICAUTH_USERNAME=admin
-            - ME_CONFIG_BASICAUTH_PASSWORD=admin
-        depends_on:
-            - mongo
-        ports:
-          - "8888:8081"
+    image: mongo-express
+    environment:
+        - ME_CONFIG_MONGODB_SERVER=mongo
+        - ME_CONFIG_MONGODB_PORT=27017
+        - ME_CONFIG_MONGODB_ENABLE_ADMIN=false
+        - ME_CONFIG_MONGODB_AUTH_DATABASE=admin
+        - ME_CONFIG_MONGODB_AUTH_USERNAME=admin
+        - ME_CONFIG_MONGODB_AUTH_PASSWORD=admin
+        - ME_CONFIG_BASICAUTH_USERNAME=admin
+        - ME_CONFIG_BASICAUTH_PASSWORD=admin
+    depends_on:
+        - mongo
+    ports:
+      - "8888:8081"
+    restart: always
   schema-registry:
     image: confluentinc/cp-schema-registry:6.2.0
     container_name: schema-registry
